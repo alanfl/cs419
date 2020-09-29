@@ -2,7 +2,7 @@
 # chmod +x portal
 # PATH=.:$PATH
 
-rm -rf acl.json
+rm -rf access.json
 portal
 portal AddUser
 portal AddUser ""

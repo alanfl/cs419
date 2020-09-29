@@ -1,0 +1,1 @@
+{"domains": {"admin": ["mike", "jack"], "user": ["john"]}, "access_permissions": {"admin": {"tv": ["read"], "film": ["read"]}, "user": {"tv": ["read"]}}, "users": {"mike": "mikepass", "john": "johnpass", "jack": "jackpass"}, "types": {"tv": ["got.mp4"], "film": ["mulan.mp4", "lor.mp4"]}}
