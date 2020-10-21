@@ -18,7 +18,7 @@ time_t time(time_t *tloc) {
         time_t t_of_day;
 
         t.tm_year = 2020-1900;
-        t.tm_mon = 8;
+        t.tm_mon = 7;
         t.tm_mday = 11;
         t.tm_hour = 14;
         t.tm_min = 45;
