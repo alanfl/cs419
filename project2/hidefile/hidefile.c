@@ -20,7 +20,7 @@ struct dirent *readdir(DIR *dirp) {
     // Debugging stuff
     if(!handle) {
         fputs(dlerror(), stderr);
-        exit(1)
+        exit(1);
     }
 
     readdir_func = dlsym(handle, "readdir");
