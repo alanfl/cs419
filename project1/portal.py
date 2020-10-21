@@ -90,11 +90,14 @@ def set_domain(user, domain):
         print("Error: missing domain")
     elif(user not in access["users"]):
         print("Error: no such user")
-    else:
+    elif(domain in access["domains"]):
         if user not in access["domains"][domain]:
             access["domains"][domain].append(user)
         print("Success")
-
+    else:
+        access["domains"][domain] = [user]
+        print("Success")
+        
 def domain_info(domain):
     if(domain == ""):
         print("Error: missing domain")
@@ -133,9 +136,13 @@ def add_access(operation, domain_name, type_name):
         print("Error: missing type")
     else:
         if(domain_name not in access["domains"]):
-            access["domains"][domain] = []
+            access["domains"][domain_name] = []
         if(type_name not in access["types"]):
             access["types"][type_name] = []
+        if domain_name not in access["access_permissions"]:
+            access["access_permissions"][domain_name] = dict()
+        if type_name not in access["access_permissions"][domain_name]:
+            access["access_permissions"][domain_name][type_name] = []
         if operation not in access["access_permissions"][domain_name][type_name]:
             access["access_permissions"][domain_name][type_name].append(operation)
         print("Success")
@@ -145,18 +152,18 @@ def can_access(operation, user, object_name):
         print("Error: missing operation")
     elif(user == ""):
         print("Error: missing user")
-    elif(object_name):
+    elif(object_name == ""):
         print("Error: missing object")
     else:
         user_domains = []
         for domain in access["domains"]:
-            if(user in domain and domain in access["access_permissions"]):
+            if(user in access["domains"][domain]):
                 user_domains.append(domain)
         object_types = []
         for t in access["types"]:
-            if(object_name in t):
+            if(object_name in access["types"][t]):
                 object_types.append(t)
-        
+
         for domain in user_domains:
             for t in object_types:
                 if(t in access["access_permissions"][domain]):
