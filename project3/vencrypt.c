@@ -12,7 +12,7 @@ int main(int argc, char** argv) {
     // User input
     if(argc != 4) {
         printf("usage: vencrypt keyfile plaintext ciphertext\n");
-        return;
+        return -1;
     }
 
     char* keyfile_name = argv[1];
@@ -28,7 +28,7 @@ int main(int argc, char** argv) {
     // Check files
     if(keyfile == NULL) {
         printf("error: Failed to open keyfile file: %s\n", keyfile_name);
-        return;
+        return -1;
     }
     if(plaintext == NULL) {
         printf("error: Failed to open plaintext file: %s\n", plaintext_name);
@@ -46,6 +46,7 @@ int main(int argc, char** argv) {
     // Pass to buffer
     unsigned char* key = (unsigned char*) calloc(sizeof(unsigned char), keyfile_size);
     fread(key, 1, keyfile_size, keyfile);
+    printf("keyfile=%s, length=%ld\n", keyfile_name, keyfile_size);
     
     unsigned char plaintext_char, ciphertext_char;
     long key_pos = 0L;
@@ -69,5 +70,5 @@ int main(int argc, char** argv) {
     fclose(plaintext);
     fclose(ciphertext);
 
-    return;
+    return 0;
 }

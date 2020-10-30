@@ -1,0 +1,8 @@
+DIFF=$(diff $1 $2)
+if [ "$DIFF" ]
+then
+    echo "***************** $3 test FAILED *****************"
+else 
+    echo "***************** $3 test PASSED *****************"
+fi
+echo ""

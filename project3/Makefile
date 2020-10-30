@@ -7,7 +7,7 @@ DFLAGS =
 # TEST_FILE = samples/test-a.txt
 # TEST_FILE = samples/test-abc.txt
 # TEST_FILE = samples/test-15.txt
-# TEST_FILE = samples/test-16.txt
+ TEST_FILE = samples/test-16.txt
 # TEST_FILE = samples/test-41.txt
 # TEST_FILE = samples/poem.txt
 # TEST_FILE = samples/alice.txt
@@ -16,7 +16,7 @@ DFLAGS =
 
 KEY_FILE = key.txt
 
-PLATFORM = linux
+PLATFORM = macos
 
 all:: clean vencrypt vdecrypt scrypt sbencrypt sbdecrypt
 
