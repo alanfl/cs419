@@ -36,26 +36,36 @@ sbdecrypt: sbdecrypt.c
 	$(CC) $(CFLAGS) $(DFLAGS) -o sbdecrypt sbdecrypt.c
 
 vencrypt_test:
-	./vencrypt ${KEY_FILE} ${TEST_FILE} _encrypt
-	${PLATFORM}/vencrypt ${KEY_FILE} ${TEST_FILE} _encrypt2
+	./vencrypt ${KEY_FILE} $(TEST_FILE) _encrypt
+	${PLATFORM}/vencrypt ${KEY_FILE} $(TEST_FILE) _encrypt2
 	./check _encrypt _encrypt2 vencrypt
-
-vbdecrypt_test:
-	./vdecrypt ${KEY_FILE} ${TEST_FILE} _decrypt
-	${PLATFORM}/vdecrypt ${KEY_FILE} ${TEST_FILE} _decrypt2
+vdecrypt_test:
+	./vdecrypt ${KEY_FILE} _encrypt _decrypt
+	${PLATFORM}/vdecrypt ${KEY_FILE} _encrypt2 _decrypt2
 	./check _decrypt _decrypt2 vdecrypt
 
 scrypt_test:
 	#macos/prand-test -p 123 -n 3
-	./scrypt abc123
+	./scrypt abc123“ ${TEST_FILE} _encrypt
+	${PLATFORM}/scrypt abc123“ ${TEST_FILE} _encrypt2
+	./check _encrypt _encrypt2 scrypt
+	./scrypt abc123“ _encrypt _decrypt
+	./check _decrypt ${TEST_FILE} scrypt
 
 sbencrypt_test:
+	./sbencrypt abc123“ ${TEST_FILE} _encrypt
+	${PLATFORM}/sbencrypt abc123“ ${TEST_FILE} _encrypt2
+	./check _encrypt _encrypt2 sbencrypt
 
 sbdecrypt_test:
+	./sbdecrypt abc123“ _encrypt _decrypt
+	${PLATFORM}/sbdecrypt abc123“ _encrypt2 _decrypt2
+	./check _decrypt _decrypt2 sbdecrypt
+	./check _decrypt ${TEST_FILE} sbdecrypt
 
 # test: scrypt_test
 # test: sbencrypt_test sbdecrypt_test
-test: vencrypt_test vbdecrypt_test scrypt_test sbencrypt_test sbdecrypt_test
+test: vencrypt_test vdecrypt_test scrypt_test sbencrypt_test sbdecrypt_test
 
 clean:
 	rm -rf vencrypt vdecrypt scrypt sbencrypt sbdecrypt _encrypt _encrypt2 _decrypt _decrypt2
