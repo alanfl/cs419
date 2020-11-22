@@ -64,3 +64,6 @@ def leading_zeroes(byte_array):
     
     num_zeroes += i
     return num_zeroes
+
+if __name__ == "__main__":
+    main()
