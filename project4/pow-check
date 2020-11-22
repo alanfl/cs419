@@ -1,0 +1,61 @@
+#!/usr/bin/env python
+
+import hashlib
+import os
+import sys
+
+def main():
+    powheader = sys.argv[1]
+
+    if not os.path.isfile(powheader):
+        print("File path {} does not exist. Aborting.".format(powheader))
+        sys.exit()
+
+    header = {}
+    with open(powheader) as file:
+        for line in file:
+            entry = line.split(':')
+            header[entry[0].strip()] = entry[1].strip()
+    
+    file_path = sys.argv[2]
+    if not os.path.isfile(file_path):
+        print("File path {} does not exist. Aborting.".format(file_path))
+        sys.exit()
+    
+    hash_function = hashlib.sha256()
+    with open(file_path) as file:
+        for line in file:
+            hash_function.update(line)
+
+    base_hash = hash_function.hexdigest()
+
+    prefix = header['Proof-of-work']
+    hash = hashlib.sha256(prefix + '' + base_hash).hexdigest()
+    hash_bytes = bytearray.fromhex(hash)
+    num_zeroes = leading_zeroes(hash_bytes)
+
+    if(header['Initial-hash'] != base_hash):
+        print("failed: Initial-hash does not match.")
+    elif(header['Hash'] != hash):
+        print('failed: Hash does not match.')
+    elif(int(header['Leading-bits']) != num_zeroes):
+        print('failed: Leading-bits does nto match')
+    else:
+        print('pass')
+
+def leading_zeroes(byte_array):
+    i = 0
+
+    # Iter until first non-zero value byte
+    while(byte_array[i] == 0):
+        i = i + 1
+    num_zeroes = i * 8
+
+    # Now count num of leading zeroes within byte
+    byte = byte_array[i]
+    i = 1
+    while(0 != (byte >> i)):
+        i = i + 1
+    
+    num_zeroes += i
+    return num_zeroes
