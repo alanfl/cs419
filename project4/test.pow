@@ -1,11 +1,7 @@
-
-
-
-analsdkfjaslkdfjklasdjfkl
 File: testfiles/abc
 Initial-hash: 1010a7e761610980ac591359c871f724de150f23440ebb5959ac4c0724c91d91
 Proof-of-work: {X
 Hash: 003015fa6aea8498ce44c185fcc56ae3e4e3579e1afc2f769d2a88c7064bb05a
-Leading-bits: 10
+Leading-bits: 
 Iterations: 296
-Compute-time: 0.000956058502197
+Compute-time: 0.00111103057861

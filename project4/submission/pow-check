@@ -25,13 +25,21 @@ def main():
     with open(powheader) as file:
         for line in file:
             line = line.strip()
-            print(line)
             if(line == ''):
                 continue
             entry = line.split(':')
             if(len(entry) < 2):
                 continue
+            if(entry[0] == "" or entry[1] == ""):
+                continue
             header[entry[0].strip()] = entry[1].strip()
+    
+    # Validate header contents
+    expected_headers = {"Initial-hash", "Proof-of-work", "Hash", "Leading-bits"}
+    for h in expected_headers:
+        if h not in header:
+            print("error: Header file was missing {}. Aborting.".format(h))
+            sys.exit()
     
     file_path = sys.argv[2]
     if not os.path.isfile(file_path):
