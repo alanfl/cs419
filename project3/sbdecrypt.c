@@ -19,7 +19,7 @@ int main(int argc, char** argv) {
 
     // User input
     if(argc != 4) {
-        printf("usage: sbencrypt password ciphertext plaintext\n");
+        printf("usage: sbdecrypt password ciphertext plaintext\n");
         return -1;
     }
 
@@ -29,8 +29,8 @@ int main(int argc, char** argv) {
 
     // Open files
     FILE *plaintext, *ciphertext;
-    plaintext = fopen(plaintext_name, "r");
-    ciphertext = fopen(ciphertext_name, "w");
+    plaintext = fopen(plaintext_name, "w");
+    ciphertext = fopen(ciphertext_name, "r");
 
     // Check files
     if(plaintext == NULL) {
@@ -107,7 +107,7 @@ int main(int argc, char** argv) {
     }
 
     if(padding_size == 0 && plaintext_block[15] != 0) {
-        truncate(plaintext, 16 * count - plaintext_block[15]);
+        truncate(plaintext_name, 16 * count - plaintext_block[15]);
     }
     return 0;
 }
